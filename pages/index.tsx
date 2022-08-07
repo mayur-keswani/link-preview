@@ -43,7 +43,8 @@ export default function Home() {
             </span>
 
             <p className="text-lead my-2">
-              Get Site' Meta-details including Domain,Title,Description,Image
+              Get Site &#39; Meta-details including
+              Domain,Title,Description,Image
             </p>
           </div>
         </section>
