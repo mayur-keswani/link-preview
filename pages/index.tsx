@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/header/Header";
+import puppeteer from "puppeteer-extra";
+import pluginStealth from "puppeteer-extra-plugin-stealth";
 import Head from "next/head";
 import axios from "axios";
 import styles from "./index.module.css";
