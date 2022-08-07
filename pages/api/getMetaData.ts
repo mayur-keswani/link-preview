@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import puppeteer from "puppeteer-extra";
-import pluginStealth from "puppeteer-extra-plugin-stealth";
+const puppeteer = require("puppeteer-extra");
+const pluginStealth = require("puppeteer-extra-plugin-stealth");
 
 export class MetaData {
   getTitle = async (page: any) => {
