@@ -17,6 +17,7 @@ export default function Home() {
 
   const getMetaData=async(url:string)=>{
     setLoading(true)
+    setError(null)
     try {
       const res = await axios.post("/api/getMetaData", { url: url });
       console.log(res.data)
@@ -70,10 +71,6 @@ export default function Home() {
                     placeholder="Enter site-url, that you wanna see preview"
                     className={"ant-input"}
                   />
-
-                  {!isloading && error && !searchedURL && (
-                    <span className="error">Something wend wrong!</span>
-                  )}
                 </label>
               </form>
             </div>
@@ -112,6 +109,9 @@ export default function Home() {
             </div>
           )}
           {isloading && <span className={styles.loader}></span>}
+          {!isloading && error && searchedURL && (
+            <span className="error">Something went wrong!</span>
+          )}
         </section>
       </div>
     </div>

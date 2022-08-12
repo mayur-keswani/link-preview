@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from "next";
 const puppeteer = require("puppeteer");
 const pluginStealth = require("puppeteer-extra-plugin-stealth");
 
@@ -88,31 +88,23 @@ export class MetaData {
       : new URL(uri).hostname.replace("www.", "");
   };
 
-  getImg = async (page:any, uri:string) => {
+  getImg = async (page: any, uri: string) => {
     const img = await page.evaluate(async () => {
-      const ogImg:any = document.querySelector('meta[property="og:image"]');
-      if (
-        ogImg != null &&
-        ogImg.content.length > 0 
-      ) {
+      const ogImg: any = document.querySelector('meta[property="og:image"]');
+      if (ogImg != null && ogImg.content.length > 0) {
         return ogImg.content;
       }
-      const imgRelLink:any = document.querySelector('link[rel="image_src"]');
-      if (
-        imgRelLink != null &&
-        imgRelLink.href.length > 0
-      ) {
+      const imgRelLink: any = document.querySelector('link[rel="image_src"]');
+      if (imgRelLink != null && imgRelLink.href.length > 0) {
         return imgRelLink.href;
       }
-      const twitterImg:any = document.querySelector('meta[name="twitter:image"]');
-      if (
-        twitterImg != null &&
-        twitterImg.content.length > 0 
-      ) {
+      const twitterImg: any = document.querySelector(
+        'meta[name="twitter:image"]'
+      );
+      if (twitterImg != null && twitterImg.content.length > 0) {
         return twitterImg.content;
       }
 
- 
       return null;
     });
     return img;
@@ -121,46 +113,49 @@ export class MetaData {
   getData = async (
     uri: string,
     puppeteerArgs = [],
-    // puppeteerAgent = "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)"
+    puppeteerAgent = "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)"
   ) => {
-    // puppeteer.use();
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: [...puppeteerArgs],
-    });
-    const page = await browser.newPage();
-    // page.setUserAgent(puppeteerAgent);
+    try {
+      // puppeteer.use();
+      const browser = await puppeteer.launch({
+        headless: true,
+        args: [...puppeteerArgs],
+      });
+      const page = await browser.newPage();
+      // page.setUserAgent(puppeteerAgent);
 
-    await page.goto(uri);
-    // await page.exposeFunction("request", request);
-    // await page.exposeFunction("urlImageIsAccessible", urlImageIsAccessible);
+      await page.goto(uri);
+      // await page.exposeFunction("request", request);
+      // await page.exposeFunction("urlImageIsAccessible", urlImageIsAccessible);
 
-    const obj: any = {};
-    obj.title = await this.getTitle(page);
+      const obj: any = {};
+      obj.title = await this.getTitle(page);
 
-    obj.description = await this.getDescription(page);
+      obj.description = await this.getDescription(page);
 
-    obj.domain = await this.getDomainName(page, uri);
+      obj.domain = await this.getDomainName(page, uri);
 
-    obj.img = await this.getImg(page, uri);
+      obj.img = await this.getImg(page, uri);
 
-    await browser.close();
-    return obj;
+      await browser.close();
+      return obj;
+    } catch (error) {
+      return error;
+    }
   };
 }
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if(req.method==='POST')
-    {
-      try{
-        const metaInstance=new MetaData()
-        const response=await metaInstance.getData(req.body.url);
-        console.log(response)
-        res.status(200).json({ metaData: response })
-      }catch(error){
-        res.status(500).json({error:error})
-      }
+  if (req.method === "POST") {
+    try {
+      const metaInstance = new MetaData();
+      const response = await metaInstance.getData(req.body.url);
+      console.log(response);
+      res.status(200).json({ metaData: response });
+    } catch (error) {
+      res.status(500).json({ error: error });
     }
+  }
 }
