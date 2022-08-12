@@ -120,7 +120,8 @@ export class MetaData {
       // puppeteer.use();
       const browser = await puppeteer.launch({
         headless: true,
-        args: ["--no-sandbox"],
+        ignoreDefaultArgs: ['--disable-extensions'],
+        args: chromium.args,
         defaultViewport: chromium.defaultViewport,
         executablePath: await chromium.executablePath,
         ignoreHTTPSErrors: true,
