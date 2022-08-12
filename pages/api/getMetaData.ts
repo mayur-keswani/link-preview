@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-const puppeteer = require("puppeteer-extra");
+const puppeteer = require("puppeteer");
 const pluginStealth = require("puppeteer-extra-plugin-stealth");
 
 export class MetaData {
@@ -123,7 +123,7 @@ export class MetaData {
     puppeteerArgs = [],
     // puppeteerAgent = "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)"
   ) => {
-    puppeteer.use(pluginStealth());
+    // puppeteer.use();
     const browser = await puppeteer.launch({
       headless: true,
       args: [...puppeteerArgs],
