@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/header/Header";
-import puppeteer from "puppeteer-extra";
+import puppeteer from "puppeteer";
 import pluginStealth from "puppeteer-extra-plugin-stealth";
 import Head from "next/head";
 import axios from "axios";
