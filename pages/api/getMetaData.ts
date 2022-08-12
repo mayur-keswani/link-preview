@@ -120,8 +120,11 @@ export class MetaData {
       // puppeteer.use();
       const browser = await puppeteer.launch({
         headless: true,
+        args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
         executablePath: await chromium.executablePath,
-        args: [...puppeteerArgs],
+        ignoreHTTPSErrors: true,
+        // args: [...puppeteerArgs],
       });
       const page = await browser.newPage();
       // page.setUserAgent(puppeteerAgent);
