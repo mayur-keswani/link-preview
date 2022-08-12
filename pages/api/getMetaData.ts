@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 const puppeteer = require("puppeteer");
+const chromium = require("chrome-aws-lambda");
 const pluginStealth = require("puppeteer-extra-plugin-stealth");
 
 export class MetaData {
@@ -119,6 +120,7 @@ export class MetaData {
       // puppeteer.use();
       const browser = await puppeteer.launch({
         headless: true,
+        executablePath: await chromium.executablePath,
         args: [...puppeteerArgs],
       });
       const page = await browser.newPage();
