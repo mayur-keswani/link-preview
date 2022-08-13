@@ -133,11 +133,10 @@ export class MetaData {
       //   // args: [...puppeteerArgs],
       // });
       const opts:any = {
-        // chromeFlags: ["--headless"],
+        chromeFlags: ["--headless"],
         logLevel: "info",
         output: "json",
       };
-
       const chrome = await ChromeLauncher.launch(opts);
       opts.port = chrome.port;
       const resp = await util.promisify(request)(
@@ -146,6 +145,7 @@ export class MetaData {
       const { webSocketDebuggerUrl } = JSON.parse(resp.body);
       const browser = await puppeteer.connect({
         browserWSEndpoint: webSocketDebuggerUrl,
+        args:['no-sandbox']
       });
       console.log("Browser",browser)
       const page = await browser.newPage();
