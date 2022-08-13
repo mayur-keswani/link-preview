@@ -21,7 +21,7 @@ export default function Home() {
     try {
       const res = await axios.post("/api/getMetaData", { url: url });
       console.log(res.data)
-      !!res?.data?.metaData && setLinkDetails(res?.data?.metaData);
+      !!res?.data?.metaData?.title && setLinkDetails(res?.data?.metaData);
       setLoading(false)
     } catch (error:any) {
       setError(error.message)

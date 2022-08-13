@@ -120,7 +120,7 @@ export class MetaData {
       // puppeteer.use(pluginStealth());
       
       const browser = await puppeteer.launch({
-        headless: true,
+        headless: false,
         ignoreDefaultArgs: ["--disable-extensions"],
         args: ['--no-sandbox', '--disable-setuid-sandbox'],  //chromium.args,
         // defaultViewport: chromium.defaultViewport,
@@ -130,6 +130,8 @@ export class MetaData {
       });
       const page = await browser.newPage();
       page.setUserAgent(puppeteerAgent);
+      
+      await page.setDefaultNavigationTimeout(0); 
 
       await page.goto(uri);
       // await page.exposeFunction("request", request);
