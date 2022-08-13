@@ -134,13 +134,13 @@ export class MetaData {
       // });
 
       console.log("----- FINDING LOCAL CHROME PATH ------")
-      const chromePath= await ChromeLauncher.Launcher.getInstallations()
-      console.log("Chrome Path:",chromePath[0]);
+      const localChromePath= await ChromeLauncher.Launcher.getInstallations()
+      console.log("Chrome Path:", localChromePath[0]);
 
       console.log("----- SETTING LUNCHER OPTIONS ------");
       const opts: any = {
         chromeFlags: ["--headless", " --disable-gpu"],
-        chromePath: chromePath[0],
+        chromePath: localChromePath[0],
         logLevel: "info",
         output: "json",
       };
