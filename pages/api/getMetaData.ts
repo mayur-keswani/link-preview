@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 const puppeteer = require("puppeteer");
-const chromium = require("chrome-aws-lambda");
+// const chromium = require("chrome-aws-lambda");
 const pluginStealth = require("puppeteer-extra-plugin-stealth");
 
 export class MetaData {
@@ -117,7 +117,8 @@ export class MetaData {
     puppeteerAgent = "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)"
   ) => {
     try {
-      // puppeteer.use();
+      puppeteer.use(pluginStealth());
+      
       const browser = await puppeteer.launch({
         headless: true,
         ignoreDefaultArgs: ["--disable-extensions"],
@@ -128,7 +129,7 @@ export class MetaData {
         // args: [...puppeteerArgs],
       });
       const page = await browser.newPage();
-      // page.setUserAgent(puppeteerAgent);
+      page.setUserAgent(puppeteerAgent);
 
       await page.goto(uri);
       // await page.exposeFunction("request", request);
