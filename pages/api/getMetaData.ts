@@ -1,8 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+
 import type { NextApiRequest, NextApiResponse } from "next";
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-core");
+const util = require('util');
+const request = require('request')
 // const chromium = require("chrome-aws-lambda");
 const pluginStealth = require("puppeteer-extra-plugin-stealth");
+const ChromeLauncher = require("chrome-launcher");
 
 export class MetaData {
   getTitle = async (page: any) => {
@@ -119,15 +123,31 @@ export class MetaData {
     try {
       // puppeteer.use(pluginStealth());
       
-      const browser = await puppeteer.launch({
-        headless: false,
-        ignoreDefaultArgs: ["--disable-extensions"],
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],  //chromium.args,
-        // defaultViewport: chromium.defaultViewport,
-        // executablePath: await chromium.executablePath,
-        ignoreHTTPSErrors: true,
-        // args: [...puppeteerArgs],
+      // const browser = await puppeteer.launch({
+      //   headless: false,
+      //   ignoreDefaultArgs: ["--disable-extensions"],
+      //   args: ['--no-sandbox', '--disable-setuid-sandbox'],  //chromium.args,
+      //   // defaultViewport: chromium.defaultViewport,
+      //   // executablePath: await chromium.executablePath,
+      //   ignoreHTTPSErrors: true,
+      //   // args: [...puppeteerArgs],
+      // });
+      const opts:any = {
+        // chromeFlags: ["--headless"],
+        logLevel: "info",
+        output: "json",
+      };
+
+      const chrome = await ChromeLauncher.launch(opts);
+      opts.port = chrome.port;
+      const resp = await util.promisify(request)(
+        `http://localhost:${opts.port}/json/version`
+      );
+      const { webSocketDebuggerUrl } = JSON.parse(resp.body);
+      const browser = await puppeteer.connect({
+        browserWSEndpoint: webSocketDebuggerUrl,
       });
+      console.log("Browser",browser)
       const page = await browser.newPage();
       page.setUserAgent(puppeteerAgent);
       
