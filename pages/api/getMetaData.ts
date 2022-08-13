@@ -145,7 +145,6 @@ export class MetaData {
       const { webSocketDebuggerUrl } = JSON.parse(resp.body);
       const browser = await puppeteer.connect({
         browserWSEndpoint: webSocketDebuggerUrl,
-        args:['no-sandbox']
       });
       console.log("Browser",browser)
       const page = await browser.newPage();
