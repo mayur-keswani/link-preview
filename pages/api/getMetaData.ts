@@ -134,13 +134,13 @@ export class MetaData {
       // });
 
       console.log("----- FINDING LOCAL CHROME PATH ------")
-      const localChromePath= await ChromeLauncher.Launcher.getInstallations()
-      console.log("Chrome Path:", localChromePath[0]);
+      // const localChromePath= await ChromeLauncher.Launcher.getInstallations()
+      // console.log("Chrome Path:", localChromePath[0]);
 
       console.log("----- SETTING LUNCHER OPTIONS ------");
       const opts: any = {
         chromeFlags: ["--headless", " --disable-gpu"],
-        chromePath: localChromePath[0],
+        chromePath: "C:Program Files (x86)GoogleChromeApplicationchrome.exe",
         logLevel: "info",
         output: "json",
       };
