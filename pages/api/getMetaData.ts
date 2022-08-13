@@ -133,20 +133,27 @@ export class MetaData {
       //   // args: [...puppeteerArgs],
       // });
 
+      console.log("----- FINDING LOCAL CHROME PATH ------")
       const chromePath= await ChromeLauncher.Launcher.getInstallations()
-      console.log(chromePath)
+      console.log("Chrome Path:",chromePath[0]);
+
+      console.log("----- SETTING LUNCHER OPTIONS ------");
       const opts: any = {
         chromeFlags: ["--headless", " --disable-gpu"],
         chromePath: chromePath[0],
         logLevel: "info",
         output: "json",
       };
+
+      console.log("----- LAUNCHING CHROME ------");
       const chrome = await ChromeLauncher.launch(opts);
       opts.port = chrome.port;
       const resp = await util.promisify(request)(
         `http://localhost:${opts.port}/json/version`
       );
       const { webSocketDebuggerUrl } = JSON.parse(resp.body);
+
+      console.log("----- LAUNCHING PUPPETEER ------");
       const browser = await puppeteer.connect({
         browserWSEndpoint: webSocketDebuggerUrl,
       });
