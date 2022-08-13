@@ -132,8 +132,12 @@ export class MetaData {
       //   ignoreHTTPSErrors: true,
       //   // args: [...puppeteerArgs],
       // });
+
+      const chromePath= await ChromeLauncher.Launcher.getInstallations()
+      console.log(chromePath)
       const opts: any = {
         chromeFlags: ["--headless", " --disable-gpu"],
+        chromePath: chromePath[0],
         logLevel: "info",
         output: "json",
       };
