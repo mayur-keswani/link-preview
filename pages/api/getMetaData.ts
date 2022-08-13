@@ -139,8 +139,8 @@ export class MetaData {
 
       console.log("----- SETTING LUNCHER OPTIONS ------");
       const opts: any = {
-        chromeFlags: ["--headless", " --disable-gpu"],
-        chromePath: "C:Program Files (x86)GoogleChromeApplicationchrome.exe",
+        chromeFlags: ["--headless", "--disable-gpu"],
+        // chromePath: localChromePath[0],
         logLevel: "info",
         output: "json",
       };
