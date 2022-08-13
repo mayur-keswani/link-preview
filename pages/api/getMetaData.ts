@@ -117,7 +117,7 @@ export class MetaData {
     puppeteerAgent = "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)"
   ) => {
     try {
-      puppeteer.use(pluginStealth());
+      // puppeteer.use(pluginStealth());
       
       const browser = await puppeteer.launch({
         headless: true,
