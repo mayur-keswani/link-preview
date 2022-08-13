@@ -132,8 +132,8 @@ export class MetaData {
       //   ignoreHTTPSErrors: true,
       //   // args: [...puppeteerArgs],
       // });
-      const opts:any = {
-        chromeFlags: ["--headless"],
+      const opts: any = {
+        chromeFlags: ["--headless", " --disable-gpu"],
         logLevel: "info",
         output: "json",
       };
